@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, models, model } from "mongoose";
+import mongoose, { Schema, Document, models, model, Types } from "mongoose";
 
 export interface VocabularyItemDocument extends Document {
   userId: mongoose.Types.ObjectId;
@@ -16,7 +16,7 @@ const VocabularyItemSchema = new Schema<VocabularyItemDocument>(
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: false,//TEMP
       index: true,
     },
 
@@ -28,7 +28,7 @@ const VocabularyItemSchema = new Schema<VocabularyItemDocument>(
 
     type: {
       type: String,
-      required: true,
+      required: false, //TEMP
     },
 
     meaning: {
