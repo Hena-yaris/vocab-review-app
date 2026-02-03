@@ -1,6 +1,22 @@
 import { RefreshCcw,Plus,BookOpen } from "lucide-react"
 import formatEthiopianDate from "@/lib/date";
 
+
+const recentVocabulary = [
+  {
+    word: "Ubiquitous",
+    definition: "Present or found everywhere at the same time.",
+  },
+  {
+    word: "Fastidious",
+    definition: "Very careful about details; hard to satisfy.",
+  },
+  {
+    word: "Obfuscate",
+    definition: "To make something confusing or unclear on purpose.",
+  },
+];
+
 export default function Home() {
 
   const progress = 81;
@@ -18,13 +34,13 @@ export default function Home() {
         </header>
 
         {/* review */}
-        <section className="bg-white p-10 my-10 rounded-2xl">
+        <section className="bg-white p-10 my-10 rounded-2xl border border-slate-200 shadow-lg">
           <div className="flex flex-col">
             <h2 className="text-lg text-slate-600">
               You have <span className="font-semibold">15 words</span> to review
               today.
             </h2>
-            <button className=" flex justify-center items-center gap-3 bg-linear-to-r from-teal-400 to-blue-500 text-white px-6 h-14 rounded-xl max-w-xs w-full my-6">
+            <button className=" flex justify-center items-center gap-4 bg-linear-to-r from-teal-400 to-blue-500 shadow-lg shadow-teal-500/50 text-white px-6 h-14 rounded-xl max-w-xs w-full my-6">
               <RefreshCcw className="w-4 h-4" />
               <span className="font-bold">Start Review Session</span>
             </button>
@@ -34,9 +50,9 @@ export default function Home() {
                 <p className="">Daily Goal Progress</p>
                 <span>{progress}%</span>
               </div>
-              <div className="bg-gray-200 h-2 w-full rounded-full">
+              <div className="bg-gray-200 h-3 w-full rounded-full">
                 <div
-                  className="h-full rounded-full bg-linear-to-r from-teal-400 to-blue-500"
+                  className="h-full rounded-full bg-linear-to-r from-teal-400 to-blue-500 transition-all duration-300"
                   style={{ width: `${progress}%` }}
                   role="progressbar"
                   aria-valuenow={progress}
@@ -50,8 +66,9 @@ export default function Home() {
 
         {/* Main links*/}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
           {/* Add new word */}
-          <div className="flex items-center bg-white p-6 gap-6 rounded-2xl">
+          <div className="flex items-center bg-white p-6 gap-6 rounded-2xl  border border-slate-200 hover:shadow-xl transition-shadow duration-300">
             <div className="flex items-center justify-center bg-emerald-50 p-4 rounded-full">
               <Plus className="w-6 h-6 text-emerald-600" />
             </div>
@@ -65,7 +82,7 @@ export default function Home() {
           </div>
 
           {/* View words */}
-          <div className="flex items-center bg-white p-6 gap-6 rounded-2xl">
+          <div className="flex items-center bg-white p-6 gap-6 rounded-2xl  border border-slate-200  hover:shadow-xl transition-shadow duration-300">
             <div className="flex items-center justify-center bg-orange-50 p-4 rounded-full">
               <BookOpen className="w-6 h-6 text-orange-500" />
             </div>
@@ -85,26 +102,15 @@ export default function Home() {
             Recently Added
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white p-6 rounded-2xl">
-              <h4 className="font-semibold pb-1">Ubiquitous</h4>
-              <p className="text-slate-500">
-                Present or found everywhere at the same time.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl">
-              <h4 className="font-semibold pb-1">Obfuscate</h4>
-              <p className="text-slate-500">
-                To make something confusing or unclear on purpose.
-              </p>
-            </div>
-
-            <div className="bg-white p-6 rounded-2xl">
-              <h4 className="font-semibold pb-1">Fastidious</h4>
-              <p className="text-slate-500">
-                Very careful about details; hard to satisfy.
-              </p>
-            </div>
+            {recentVocabulary.map((rv, i) => (
+              <div
+                key={i}
+                className="bg-white p-6 rounded-2xl  border border-slate-200"
+              >
+                <h4 className="font-semibold pb-1">{rv.word}</h4>
+                <p className="text-slate-500">{rv.definition}</p>
+              </div>
+            ))}
           </div>
         </section>
       </div>
