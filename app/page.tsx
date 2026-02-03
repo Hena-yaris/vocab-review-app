@@ -1,102 +1,81 @@
-"use client"
+"use client";
 
-import { RefreshCcw,Plus,BookOpen } from "lucide-react"
+import { RefreshCcw} from "lucide-react"
 import formatEthiopianDate from "@/lib/date";
 import Card from "@/components/ui/Card";
 import { mainLinks } from "@/data/mainLinks";
-import Link from "next/link";
+import { recentVocabulary } from "@/data/recentWords";
 import ActionCard from "@/components/ui/ActionCard";
 
-
-const recentVocabulary = [
-  {
-    word: "Ubiquitous",
-    definition: "Present or found everywhere at the same time.",
-  },
-  {
-    word: "Fastidious",
-    definition: "Very careful about details; hard to satisfy.",
-  },
-  {
-    word: "Obfuscate",
-    definition: "To make something confusing or unclear on purpose.",
-  },
-];
-
-
-const mainLink = [
-  {
-    iconBg: "bg-emerald-50",
-    icon: <Plus />,
-    iconColor: "text-emerald-600",
-
-    addBookhref: "#",
-    title: "Add New Word.",
-    desc: "Save words from books or podcasts.",
-  },
-
-  {
-    iconBg: "bg-orange-50",
-    icon: <BookOpen />,
-    iconColor: "text-orange-600",
-
-    addBookhref: "#",
-    title: "View Library.",
-    desc: "Browse all saved vocabulary.",
-  },
-];
+import Link from "next/link";
+import VocabularyReCard from "@/components/ui/VocabularyReCard";
 
 export default function Home() {
 
   const progress = 81;
- 
 
   return (
     <main className="min-h-screen bg-slate-50">
-      <div className="max-w-6xl px-4 py-6 mx-auto">
+      <div className="max-w-6xl px-4 py-12 mx-auto">
         {/* welcome */}
-        <header className="flex justify-between items-center mt-4">
-          <h1 className="text-3xl font-semibold text-slate-900">
-            Hello, Yared!
+        <header className="flex flex-col md:flex-row md:justify-between md:items-end border-b border-slate-100 pb-6 mt-8 gap-2">
+          <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
+            Hello,{" "}
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-teal-500 to-blue-600">
+              Yared!
+            </span>
           </h1>
-          <p className="text-slate-500">{formatEthiopianDate()}</p>
+          <p className="text-slate-500 font-medium flex items-center gap-2 mt-1">
+            <span className="w-2 h-2 rounded-full bg-teal-400  animate-pulse"></span>
+            
+            
+            {formatEthiopianDate()}
+          </p>
         </header>
 
-        {/* review */}
-        <Card className=" p-10 my-10 shadow-lg">
-          <div className="flex flex-col">
-            <h2 className="text-lg text-slate-600">
-              You have <span className="font-semibold">15 words</span> to review
-              today.
-            </h2>
-            <button className=" flex justify-center items-center gap-4 bg-linear-to-r from-teal-400 to-blue-500 shadow-lg shadow-teal-500/50 text-white px-6 h-14 rounded-xl max-w-xs w-full my-6">
-              <RefreshCcw className="w-4 h-4" />
-              <span className="font-bold">Start Review Session</span>
-            </button>
+        {/* review card*/}
+        <section className="my-10">
+          <Card className="p-10  shadow-lg">
+            <div className="flex flex-col">
+              <h2 className="text-lg text-slate-600">
+                You have <span className="font-semibold">15 words</span> to
+                review today.
+              </h2>
+              <Link
+                href="#"
+                className="group relative flex justify-center items-center gap-3 bg-linear-to-br from-teal-400 to-blue-600 text-white px-8 h-16 rounded-2xl max-w-xs w-full my-8 font-bold text-lg shadow-[0_10px_20px_-10px_rgba(20,184,166,0.5)] hover:shadow-[0_20px_30px_-10px_rgba(20,184,166,0.7)] hover:-translate-y-1 transition-all duration-300 ease-out overflow-hidden"
+              >
+                {/* Subtle Shine Effect */}
+                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
 
-            <div className="w-full">
-              <div className="flex justify-between mb-3 text-slate-400">
-                <p className="">Daily Goal Progress</p>
-                <span>{progress}%</span>
-              </div>
-              <div className="bg-gray-200 h-3 w-full rounded-full">
-                <div
-                  className="h-full rounded-full bg-linear-to-r from-teal-400 to-blue-500 transition-all duration-300"
-                  style={{ width: `${progress}%` }}
-                  role="progressbar"
-                  aria-valuenow={progress}
-                  aria-valuemin={0}
-                  aria-valuemax={100}
-                />
+                <RefreshCcw className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
+                <span>Start Review Session</span>
+              </Link>
+
+              <div className="w-full">
+                <div className="flex justify-between mb-3 text-slate-400">
+                  <p className="">Daily Goal Progress</p>
+                  <span>{progress}%</span>
+                </div>
+                <div className="bg-gray-200 h-3 w-full rounded-full">
+                  <div
+                    className="h-full rounded-full bg-linear-to-r from-teal-400 to-blue-500 transition-all duration-300"
+                    style={{ width: `${progress}%` }}
+                    role="progressbar"
+                    aria-valuenow={progress}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                  />
+                </div>
               </div>
             </div>
-          </div>
-        </Card>
+          </Card>
+        </section>
 
         {/* Main links*/}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {mainLinks.map((item)=> (
-            <ActionCard key={item.href} {...item}/>
+          {mainLinks.map((item) => (
+            <ActionCard key={item.href} {...item} />
           ))}
         </section>
 
@@ -106,14 +85,8 @@ export default function Home() {
             Recently Added
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {recentVocabulary.map((rv, i) => (
-              <div
-                key={i}
-                className="bg-white p-6 rounded-2xl  border border-slate-200"
-              >
-                <h4 className="font-semibold pb-1">{rv.word}</h4>
-                <p className="text-slate-500">{rv.definition}</p>
-              </div>
+            {recentVocabulary.map((item) => (
+              <VocabularyReCard key={item.word} {...item} />
             ))}
           </div>
         </section>
@@ -121,3 +94,6 @@ export default function Home() {
     </main>
   );
 }
+
+
+
