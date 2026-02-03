@@ -1,5 +1,11 @@
+"use client"
+
 import { RefreshCcw,Plus,BookOpen } from "lucide-react"
 import formatEthiopianDate from "@/lib/date";
+import Card from "@/components/ui/Card";
+import { mainLinks } from "@/data/mainLinks";
+import Link from "next/link";
+import ActionCard from "@/components/ui/ActionCard";
 
 
 const recentVocabulary = [
@@ -14,6 +20,29 @@ const recentVocabulary = [
   {
     word: "Obfuscate",
     definition: "To make something confusing or unclear on purpose.",
+  },
+];
+
+
+const mainLink = [
+  {
+    iconBg: "bg-emerald-50",
+    icon: <Plus />,
+    iconColor: "text-emerald-600",
+
+    addBookhref: "#",
+    title: "Add New Word.",
+    desc: "Save words from books or podcasts.",
+  },
+
+  {
+    iconBg: "bg-orange-50",
+    icon: <BookOpen />,
+    iconColor: "text-orange-600",
+
+    addBookhref: "#",
+    title: "View Library.",
+    desc: "Browse all saved vocabulary.",
   },
 ];
 
@@ -34,7 +63,7 @@ export default function Home() {
         </header>
 
         {/* review */}
-        <section className="bg-white p-10 my-10 rounded-2xl border border-slate-200 shadow-lg">
+        <Card className=" p-10 my-10 shadow-lg">
           <div className="flex flex-col">
             <h2 className="text-lg text-slate-600">
               You have <span className="font-semibold">15 words</span> to review
@@ -62,38 +91,13 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </Card>
 
         {/* Main links*/}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* Add new word */}
-          <div className="flex items-center bg-white p-6 gap-6 rounded-2xl  border border-slate-200 hover:shadow-xl transition-shadow duration-300">
-            <div className="flex items-center justify-center bg-emerald-50 p-4 rounded-full">
-              <Plus className="w-6 h-6 text-emerald-600" />
-            </div>
-
-            <div>
-              <h3 className="font-semibold">Add New Word</h3>
-              <p className="text-slate-600 text-base">
-                Save words from books or podcasts
-              </p>
-            </div>
-          </div>
-
-          {/* View words */}
-          <div className="flex items-center bg-white p-6 gap-6 rounded-2xl  border border-slate-200  hover:shadow-xl transition-shadow duration-300">
-            <div className="flex items-center justify-center bg-orange-50 p-4 rounded-full">
-              <BookOpen className="w-6 h-6 text-orange-500" />
-            </div>
-
-            <div>
-              <h3 className="font-semibold">View Library</h3>
-              <p className="text-slate-600 text-base">
-                Browse all saved vocabulary
-              </p>
-            </div>
-          </div>
+          {mainLinks.map((item)=> (
+            <ActionCard key={item.href} {...item}/>
+          ))}
         </section>
 
         {/* Recently added words */}
