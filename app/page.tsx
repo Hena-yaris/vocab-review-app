@@ -1,6 +1,7 @@
 "use client";
 
-import { RefreshCcw} from "lucide-react"
+
+import { RefreshCcw} from "lucide-react";
 import formatEthiopianDate from "@/lib/date";
 import Card from "@/components/ui/Card";
 import { mainLinks } from "@/data/mainLinks";
@@ -12,11 +13,14 @@ import VocabularyReCard from "@/components/ui/VocabularyReCard";
 
 export default function Home() {
 
+
+
   const progress = 81;
 
   return (
     <main className="min-h-screen bg-slate-50">
       <div className="max-w-6xl px-4 py-12 mx-auto">
+
         {/* welcome */}
         <header className="flex flex-col md:flex-row md:justify-between md:items-end border-b border-slate-100 pb-6 mt-8 gap-2">
           <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 leading-tight">
@@ -42,7 +46,7 @@ export default function Home() {
                 review today.
               </h2>
               <Link
-                href="#"
+                href="/dashboard/vocabulary/review"
                 className="group relative flex justify-center items-center gap-3 bg-linear-to-br from-teal-400 to-blue-600 text-white px-8 h-16 rounded-2xl max-w-xs w-full my-8 font-bold text-lg shadow-[0_10px_20px_-10px_rgba(20,184,166,0.5)] hover:shadow-[0_20px_30px_-10px_rgba(20,184,166,0.7)] hover:-translate-y-1 transition-all duration-300 ease-out overflow-hidden"
               >
                 {/* Subtle Shine Effect */}

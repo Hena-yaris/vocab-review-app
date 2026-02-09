@@ -1,21 +1,14 @@
 import { Plus, BookOpen } from "lucide-react";
+import { MainLink } from "@/types/mainLink";
 
-type MainLink = {
-    title: string,
-    description: string,
-    href: string,
-    icon: React.ElementType,
-    iconColor:string,
-    iconBg: string,
-    
-}
+
 
 
 export const mainLinks:MainLink[] = [
   {
     title: "Add New Word",
     description: "Save words from books or podcasts",
-    href: "/add",
+    href: "/dashboard/vocabulary/add",
     icon: Plus,
     iconColor:"text-emerald-600",
     iconBg: "bg-emerald-50",
@@ -23,7 +16,7 @@ export const mainLinks:MainLink[] = [
   {
     title: "View Library",
     description: "Browse all saved vocabulary",
-    href: "/library",
+    href: "/dashboard/vocabulary/list",
     icon: BookOpen,
     iconColor: "text-orange-500",
     iconBg: "bg-orange-50",

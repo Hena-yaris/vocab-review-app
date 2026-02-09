@@ -4,7 +4,7 @@ import { VocabularyItem } from "@/models/VocabularyItem";
 
 export async function POST(req: Request) {
     try{
-        const { term, type, meaning, example, source, tags, userId } =
+        const { term, type, meaning, example, source,  userId } =
         await req.json();
 
         if(!term?.trim() || !meaning?.trim()){
@@ -22,7 +22,6 @@ export async function POST(req: Request) {
         meaning,
         example,
         source,
-        tags,
     });
 
     return NextResponse.json(newWord,{status: 201});

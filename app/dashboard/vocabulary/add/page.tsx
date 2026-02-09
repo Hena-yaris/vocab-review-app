@@ -4,6 +4,8 @@ import formatEthiopianDate from "@/lib/date";
 import { usePathname } from "next/navigation";
 import { FilePlus, BookCheck, Library, Search,UserPen,CircleArrowLeft } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
+
 
 
 
@@ -25,21 +27,57 @@ const navItems = [
   },
 ];
 
-export default function VocabularyLayout() {
+export default function VocabularyAddPage() {
   const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>){
+    e.preventDefault();
+    setLoading(true);
+
+    const form = e.currentTarget;
+    const data = {
+      term : form.term.value,
+      type: form.type.value,
+      meaning: form.meaning.value,
+      example: form.example.value,
+      source: form.source.value,
+
+    }
+
+    const res = await fetch("/api/vocabulary/add",{
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    setLoading(false);
+
+    if (!res.ok) {
+      alert("Something went wrong");
+      return;
+    }
+
+    form.reset();
+    alert("Vocabulary saved!");
+
+  }
 
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
       <header className="flex items-center px-4 md:px-12 justify-between h-16 bg-white shadow-sm border-b border-slate-100 sticky top-0 z-50">
         <div className="flex items-center gap-4 flex-1">
-          <div
+          <Link
+            href="/"
             className="mr-6 lg:hidden cursor-pointer transition-all duration-300 
                 hover:scale-110 hover:-translate-x-2 active:scale-95
                 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
           >
             <CircleArrowLeft size={30} className="text-teal-500" />
-          </div>
+          </Link>
           <p className="bg-slate-100 px-4 h-10 flex items-center justify-center rounded-full text-sm font-medium text-slate-600 truncate">
             {formatEthiopianDate()}
           </p>
@@ -54,7 +92,7 @@ export default function VocabularyLayout() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
         {/* 1. SIDEBAR (Left) - Spans 2 of 12 columns */}
         <aside className="hidden lg:block lg:col-span-2 bg-white border-r border-slate-200 h-[calc(100vh-64px)] sticky top-16">
-          <nav className="flex flex-col pt-12 px-4 gap-4">
+          <nav className="flex flex-col pt-24 px-4 gap-8">
             {navItems.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -91,26 +129,45 @@ export default function VocabularyLayout() {
         {/* 2. MAIN FORM (Center) - Spans 7 of 12 columns */}
         <main className="col-span-1 md:col-span-7  p-6 lg:p-12">
           <div className="max-w-2xl mx-auto">
-            <h2 className="text-3xl font-bold text-slate-900 mb-8">
+            <h2 className="text-3xl font-bold  text-transparent bg-clip-text bg-linear-to-r from-teal-500 to-blue-600 mb-8">
               Add New Vocabulary
             </h2>
 
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <input
                   type="text"
+                  name="term"
                   placeholder="Word / phrase / Slang"
                   className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-white shadow-sm focus:ring-2 focus:ring-teal-500 outline-none transition-all"
                 />
               </div>
 
               <div className="relative">
-                <select className="w-full md:w-1/2 appearance-none px-5 py-3 rounded-xl border border-slate-200 bg-white text-slate-600 font-medium focus:ring-2 focus:ring-teal-500 outline-none">
-                  <option value="" disabled selected>
+                <select
+                  name="type"
+                  defaultValue=""
+                  className="w-full md:w-1/2 appearance-none px-5 py-3 rounded-xl border border-slate-200 bg-white text-slate-600 font-medium focus:ring-2 focus:ring-teal-500 outline-none cursor-pointer"
+                >
+                  <option value="" disabled>
                     Select type
                   </option>
-                  <option value="word">Word</option>
-                  <option value="slang">Slang</option>
+                  <optgroup label="Vocabulary">
+                    <option value="word">Word</option>
+                    <option value="phrase">Phrase</option>
+                    <option value="slang">Slang</option>
+                  </optgroup>
+
+                  <optgroup label="Expressions">
+                    <option value="idiom">Idiom</option>
+                    <option value="phrasal-verb">Phrasal Verb</option>
+                    <option value="collocation">Collocation</option>
+                  </optgroup>
+
+                  <optgroup label="Language Skills">
+                    <option value="pronunciation">Pronunciation</option>
+                    <option value="spelling">Spelling</option>
+                  </optgroup>
                 </select>
               </div>
 
@@ -118,14 +175,20 @@ export default function VocabularyLayout() {
                 <label className="mb-2 text-sm font-bold text-slate-500 uppercase tracking-tight">
                   Definition
                 </label>
-                <textarea className="w-full p-4 rounded-2xl border border-slate-200 bg-white min-h-25 focus:ring-2 focus:ring-teal-500 outline-none" />
+                <textarea
+                  name="meaning"
+                  className="w-full p-4 rounded-2xl border border-slate-200 bg-white min-h-25 focus:ring-2 focus:ring-teal-500 outline-none"
+                />
               </div>
 
               <div className="flex flex-col">
                 <label className="mb-2 text-sm font-bold text-slate-500 uppercase tracking-tight">
                   Example Sentence
                 </label>
-                <textarea className="w-full p-4 rounded-2xl border border-slate-200 bg-white min-h-25 focus:ring-2 focus:ring-teal-500 outline-none" />
+                <textarea
+                  name="example"
+                  className="w-full p-4 rounded-2xl border border-slate-200 bg-white min-h-25 focus:ring-2 focus:ring-teal-500 outline-none"
+                />
               </div>
 
               <div className="relative">
@@ -135,23 +198,25 @@ export default function VocabularyLayout() {
                 />
                 <input
                   type="text"
-                  placeholder="Source (book, movie, etc)"
+                  name="source"
+                  placeholder="Source (book, movie,bible, etc)"
                   className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-white focus:ring-2 focus:ring-teal-500 outline-none"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-4 bg-linear-to-r from-teal-500 to-blue-600 text-white font-bold text-lg rounded-2xl shadow-lg hover:opacity-90 transition-opacity cursor-pointer"
+                disabled={loading}
+                className={`w-full py-4 text-white font-bold text-lg rounded-2xl shadow-lg hover:opacity-90 transition-opacity  ${loading ? "bg-slate-400 cursor-not-allowed" : " bg-linear-to-r from-teal-500 to-blue-600 cursor-pointer"}`}
               >
-                Save Vocabulary
+                {loading ? "Saving Vocabulary..." : "Save Vocabulary"}
               </button>
             </form>
           </div>
         </main>
 
         {/* 3. STATS (Right) - Spans 3 of 12 columns */}
-        <article className="hidden md:block md:col-span-5 lg:col-span-3  bg-white border-l border-slate-200 p-8 h-1/2 sticky top-24 mt-5 rounded-xl">
+        <article className="hidden md:block md:col-span-5 lg:col-span-3  bg-white border-l border-slate-200 p-8 h-1/2 sticky top-35 mt-16 rounded-xl">
           <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">
             Stats Summary
           </h3>

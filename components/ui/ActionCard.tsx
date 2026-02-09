@@ -1,5 +1,5 @@
 import Card from "./Card";
-import { MainLink } from "@/data/mainLinks";
+import { MainLink } from "@/types/mainLink";
 import Link from "next/link";
 
 

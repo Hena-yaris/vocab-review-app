@@ -12,9 +12,9 @@ export default function Navbar() {
   return (
     <nav className="flex justify-center items-center gap-6 h-16 border-b border-border">
       <Link
-        href="/add"
+        href="/dashboard/vocabulary/add"
         className={`text-sm transition-all px-4 py-2 rounded-full ${
-          isActive("/add")
+          isActive("/dashboard/vocabulary/add")
             ? "bg-gray-100 text-foreground"
             : "text-muted hover:text-foreground"
         }`}
@@ -23,9 +23,9 @@ export default function Navbar() {
       </Link>
 
       <Link
-        href="/review"
+        href="/dashboard/vocabulary/review"
         className={`text-sm transition-all px-4 py-2 rounded-full ${
-          isActive("/review")
+          isActive("/dashboard/vocabulary/review")
             ? "bg-gray-100 text-foreground"
             : "text-muted hover:text-foreground"
         }`}
@@ -34,9 +34,9 @@ export default function Navbar() {
       </Link>
 
       <Link
-        href="/vocabulary"
+        href="/dashboard/vocabulary/list"
         className={`text-sm transition-all px-4 py-2 rounded-full ${
-          isActive("/vocabulary")
+          isActive("/dashboard/vocabulary/list")
             ? "bg-gray-100 text-foreground"
             : "text-muted hover:text-foreground"
         }`}

@@ -44,10 +44,7 @@ const VocabularyItemSchema = new Schema<VocabularyItemDocument>(
       type: String,
     },
 
-    tags: {
-      type: [String],
-      default: [],
-    },
+    
   },
   {
     timestamps: { createdAt: true, updatedAt: false },
