@@ -2,7 +2,7 @@
 import formatEthiopianDate from "@/lib/date";
 
 import { usePathname } from "next/navigation";
-import { FilePlus, BookCheck, Library, Search,UserPen,CircleArrowLeft } from "lucide-react";
+import { ScanSearch, Landmark,LayoutGrid, Search,UserPen,CopyPlus } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -13,17 +13,17 @@ const navItems = [
   {
     label: "Add Vocabulary",
     href: "/dashboard/vocabulary/add",
-    icon: FilePlus,
+    icon: CopyPlus,
   },
   {
     label: "Review Vocabulary",
     href: "/dashboard/vocabulary/review",
-    icon: BookCheck,
+    icon: ScanSearch,
   },
   {
     label: "All Vocabulary",
     href: "/dashboard/vocabulary/list",
-    icon: Library,
+    icon: Landmark,
   },
 ];
 
@@ -72,11 +72,11 @@ export default function VocabularyAddPage() {
         <div className="flex items-center gap-4 flex-1">
           <Link
             href="/"
-            className="mr-6 lg:hidden cursor-pointer transition-all duration-300 
-                hover:scale-110 hover:-translate-x-2 active:scale-95
+            className="mr-6 cursor-pointer transition-all duration-300 
+                 hover:-translate-x-2 active:scale-95
                 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
           >
-            <CircleArrowLeft size={30} className="text-teal-500" />
+            <LayoutGrid size={30} className="text-teal-500" />
           </Link>
           <p className="bg-slate-100 px-4 h-10 flex items-center justify-center rounded-full text-sm font-medium text-slate-600 truncate">
             {formatEthiopianDate()}
