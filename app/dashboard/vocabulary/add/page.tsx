@@ -1,26 +1,146 @@
-
-
-import {UserPen} from "lucide-react";
+"use client";
 import formatEthiopianDate from "@/lib/date";
 
 
-export default function AddPage (){
+import { FilePlus, BookCheck, Library, Search,UserPen,CircleArrowLeft } from "lucide-react";
 
-
-
+export default function VocabularyLayout() {
   return (
-    <section className="min-h-screen bg-slate-50 ">
-      
+    <div className="min-h-screen bg-slate-50">
+
       {/* Header */}
-      <header className="flex items-center px-12 justify-between h-16 bg-white">
-        {/* day */}
-        <p className="bg-slate-200  h-10 flex items-center justify-center flex-1 rounded-full mr-8 ">{formatEthiopianDate()}</p>
-        <div className="bg-slate-200 p-3 rounded-full">
-            <UserPen size={20}/>
+      <header className="flex items-center px-4 md:px-12 justify-between h-16 bg-white shadow-sm border-b border-slate-100 sticky top-0 z-50">
+        <div className="flex items-center gap-4 flex-1">
+          <div
+            className="mr-6 lg:hidden cursor-pointer transition-all duration-300 
+                hover:scale-110 hover:-translate-x-2 active:scale-95
+                ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+          >
+            <CircleArrowLeft size={30} className="text-teal-500" />
+          </div>
+          <p className="bg-slate-100 px-4 h-10 flex items-center justify-center rounded-full text-sm font-medium text-slate-600 truncate">
+            {formatEthiopianDate()}
+          </p>
+        </div>
+
+        <div className="bg-slate-100 p-2.5 rounded-full hover:bg-slate-200 cursor-pointer transition-colors">
+          <UserPen size={20} className="text-slate-700" />
         </div>
       </header>
 
-     
-    </section>
+      {/* Main Grid Container */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
+        {/* 1. SIDEBAR (Left) - Spans 2 of 12 columns */}
+        <aside className="hidden lg:block lg:col-span-2 bg-white border-r border-slate-200 h-[calc(100vh-64px)] sticky top-16">
+          <div className="flex flex-col pt-12 px-4 gap-4">
+            <div className="flex items-center p-3 bg-red-50 text-red-600 rounded-xl cursor-pointer hover:bg-red-100 transition-colors">
+              <FilePlus className="w-5 h-5 mr-3" />
+              <span className="text-xs font-bold uppercase tracking-wider">
+                Add New Vocabulary
+              </span>
+            </div>
+            <div className="flex items-center p-3 text-slate-600 rounded-xl cursor-pointer hover:bg-slate-100 transition-colors">
+              <BookCheck className="w-5 h-5 mr-3" />
+              <span className="text-xs font-bold uppercase tracking-wider">
+                Recent Vocabulary
+              </span>
+            </div>
+            <div className="flex items-center p-3 text-slate-600 rounded-xl cursor-pointer hover:bg-slate-100 transition-colors">
+              <Library className="w-5 h-5 mr-3" />
+              <span className="text-xs font-bold uppercase tracking-wider">
+                All Vocabulary
+              </span>
+            </div>
+          </div>
+        </aside>
+
+        {/* 2. MAIN FORM (Center) - Spans 7 of 12 columns */}
+        <main className="col-span-1 md:col-span-7  p-6 lg:p-12">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold text-slate-900 mb-8">
+              Add New Vocabulary
+            </h2>
+
+            <form className="space-y-6">
+              <div>
+                <input
+                  type="text"
+                  placeholder="Word / phrase / Slang"
+                  className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-white shadow-sm focus:ring-2 focus:ring-teal-500 outline-none transition-all"
+                />
+              </div>
+
+              <div className="relative">
+                <select className="w-full md:w-1/2 appearance-none px-5 py-3 rounded-xl border border-slate-200 bg-white text-slate-600 font-medium focus:ring-2 focus:ring-teal-500 outline-none">
+                  <option value="" disabled selected>
+                    Select type
+                  </option>
+                  <option value="word">Word</option>
+                  <option value="slang">Slang</option>
+                </select>
+              </div>
+
+              <div className="flex flex-col">
+                <label className="mb-2 text-sm font-bold text-slate-500 uppercase tracking-tight">
+                  Definition
+                </label>
+                <textarea className="w-full p-4 rounded-2xl border border-slate-200 bg-white min-h-25 focus:ring-2 focus:ring-teal-500 outline-none" />
+              </div>
+
+              <div className="flex flex-col">
+                <label className="mb-2 text-sm font-bold text-slate-500 uppercase tracking-tight">
+                  Example Sentence
+                </label>
+                <textarea className="w-full p-4 rounded-2xl border border-slate-200 bg-white min-h-25 focus:ring-2 focus:ring-teal-500 outline-none" />
+              </div>
+
+              <div className="relative">
+                <Search
+                  size={20}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Source (book, movie, etc)"
+                  className="w-full px-5 py-4 rounded-2xl border border-slate-200 bg-white focus:ring-2 focus:ring-teal-500 outline-none"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-4 bg-linear-to-r from-teal-500 to-blue-600 text-white font-bold text-lg rounded-2xl shadow-lg hover:opacity-90 transition-opacity cursor-pointer"
+              >
+                Save Vocabulary
+              </button>
+            </form>
+          </div>
+        </main>
+
+        {/* 3. STATS (Right) - Spans 3 of 12 columns */}
+        <article className="hidden md:block md:col-span-5 lg:col-span-3  bg-white border-l border-slate-200 p-8 h-1/2 sticky top-24 mt-5 rounded-xl">
+          <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-6">
+            Stats Summary
+          </h3>
+
+          <div className="space-y-8">
+            <div>
+              <span className="block text-5xl font-black text-teal-600 tracking-tighter">
+                421
+              </span>
+              <p className="text-slate-600 font-medium">Total Words Added</p>
+            </div>
+
+            <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
+              <p className="text-xs font-bold text-slate-400 uppercase">
+                Top Source
+              </p>
+              <p className="text-slate-800 font-semibold mt-1">
+                Movies & Shows
+              </p>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
   );
 }
