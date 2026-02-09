@@ -1,13 +1,35 @@
 "use client";
 import formatEthiopianDate from "@/lib/date";
 
-
+import { usePathname } from "next/navigation";
 import { FilePlus, BookCheck, Library, Search,UserPen,CircleArrowLeft } from "lucide-react";
+import Link from "next/link";
+
+
+
+const navItems = [
+  {
+    label: "Add Vocabulary",
+    href: "/dashboard/vocabulary/add",
+    icon: FilePlus,
+  },
+  {
+    label: "Review Vocabulary",
+    href: "/dashboard/vocabulary/review",
+    icon: BookCheck,
+  },
+  {
+    label: "All Vocabulary",
+    href: "/dashboard/vocabulary/list",
+    icon: Library,
+  },
+];
 
 export default function VocabularyLayout() {
+  const pathname = usePathname();
+
   return (
     <div className="min-h-screen bg-slate-50">
-
       {/* Header */}
       <header className="flex items-center px-4 md:px-12 justify-between h-16 bg-white shadow-sm border-b border-slate-100 sticky top-0 z-50">
         <div className="flex items-center gap-4 flex-1">
@@ -32,26 +54,38 @@ export default function VocabularyLayout() {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-0">
         {/* 1. SIDEBAR (Left) - Spans 2 of 12 columns */}
         <aside className="hidden lg:block lg:col-span-2 bg-white border-r border-slate-200 h-[calc(100vh-64px)] sticky top-16">
-          <div className="flex flex-col pt-12 px-4 gap-4">
-            <div className="flex items-center p-3 bg-red-50 text-red-600 rounded-xl cursor-pointer hover:bg-red-100 transition-colors">
-              <FilePlus className="w-5 h-5 mr-3" />
-              <span className="text-xs font-bold uppercase tracking-wider">
-                Add New Vocabulary
-              </span>
-            </div>
-            <div className="flex items-center p-3 text-slate-600 rounded-xl cursor-pointer hover:bg-slate-100 transition-colors">
-              <BookCheck className="w-5 h-5 mr-3" />
-              <span className="text-xs font-bold uppercase tracking-wider">
-                Recent Vocabulary
-              </span>
-            </div>
-            <div className="flex items-center p-3 text-slate-600 rounded-xl cursor-pointer hover:bg-slate-100 transition-colors">
-              <Library className="w-5 h-5 mr-3" />
-              <span className="text-xs font-bold uppercase tracking-wider">
-                All Vocabulary
-              </span>
-            </div>
-          </div>
+          <nav className="flex flex-col pt-12 px-4 gap-4">
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <Link
+                  href={item.href}
+                  key={item.href}
+                  className="relative flex items-center p-3 rounded-xl overflow-hidden group"
+                >
+                  {/* Gradient layer */}
+                  <span
+                    className={`absolute inset-0 bg-linear-to-r from-teal-500 to-blue-600
+      transition-opacity duration-300
+      ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
+    `}
+                  />
+
+                  {/* Content */}
+                  <span
+                    className={`relative z-10 flex items-center transition-colors duration-300
+      ${isActive ? "text-white" : "text-slate-600 group-hover:text-white"}
+    `}
+                  >
+                    <item.icon className="w-5 h-5 mr-3" />
+                    <span className="text-xs font-bold uppercase tracking-wider">
+                      {item.label}
+                    </span>
+                  </span>
+                </Link>
+              );
+            })}
+          </nav>
         </aside>
 
         {/* 2. MAIN FORM (Center) - Spans 7 of 12 columns */}
