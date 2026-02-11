@@ -1,7 +1,8 @@
 "use client";
 
-import {ChevronRight, BookOpen,Loader2 } from "lucide-react";
+import {ChevronRight, BookOpen } from "lucide-react";
 import { useEffect, useState } from "react";
+import { SOURCE_CONFIG, SourceKey } from "@/lib/sourceConfig";
 
 
 
@@ -59,7 +60,7 @@ export default function VocabularyPage() {
 
 if (loading) {
   return (
-    <div className="space-y-4 animate-pulse">
+    <div className="space-y-4 animate-pulse px-6 py-12 lg:p-12  ">
       {[1, 2, 3, 4].map((item) => (
         <div
           key={item}
@@ -97,6 +98,10 @@ if (loading) {
           <div className="space-y-4">
             {groupedData.map((group) => {
               const isOpen = openSource === group.source;
+              const key = group.source.toLowerCase() as SourceKey;
+              const config = SOURCE_CONFIG[key] ?? SOURCE_CONFIG["movie"];
+              const ICON = config.icon;
+              
 
               return (
                 <div
@@ -109,8 +114,8 @@ if (loading) {
                     className="w-full flex items-center justify-between px-6 py-4 hover:bg-slate-50 transition"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-teal-100 text-teal-600">
-                        <BookOpen className="w-5 h-5" />
+                      <div className={`p-2 rounded-lg ${config.bg} ${config.color}`}>
+                        <ICON className="w-5 h-5" />
                       </div>
                       <span className="font-semibold capitalize  text-slate-700">
                         {group.source}
