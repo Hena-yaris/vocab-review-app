@@ -7,7 +7,6 @@ export interface VocabularyItemDocument extends Document {
   meaning: string;
   example?: string;
   source?: string;
-  tags?: string[];
   createdAt: Date;
 }
 
